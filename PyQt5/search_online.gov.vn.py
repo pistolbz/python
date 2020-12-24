@@ -12,7 +12,7 @@ class SearchOnline:
         self.keyword = keyword
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
-        options.add_argument("user-data-dir=C:\\Users\\Admin\\AppData\\Local\\Google\\Chrome\\User Data")
+        #options.add_argument("user-data-dir=C:\\Users\\Admin\\AppData\\Local\\Google\\Chrome\\User Data")
         self.driver = webdriver.Chrome(executable_path=r'C:\\gitclone\\python\\chromedriver.exe', options=options)
 
     def search(self):
