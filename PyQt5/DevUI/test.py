@@ -26,23 +26,22 @@ class SearchOnline:
 
     def check_logo(self):
         check = self.driver.find_element_by_class_name("imageGridDetailLogo").get_attribute("src")
-        check_result = "Tình trạng đăng ký: \n"
+        result = ["Tình trạng đăng ký:"]
         if (str(check) == 'http://online.gov.vn/Content/EndUser/LogoCCDVSaleNoti/logoSaleNoti.png'):
-            check_result = check_result + "Đã thông báo"
+            res = "Đã thông báo"
         else:
             if (str(check) == 'http://online.gov.vn/Content/EndUser/LogoCCDVSaleNoti/logoCCDV.png'):
-                check_result = check_result + "Đã đăng ký"
+                res = "Đã đăng ký"
             else:
-                check_result = check_result + "Website chưa được xác nhận"
-        return check_result
-
+                res = "Website chưa được xác nhận"
+        result.append(res)
+        return result
+        
+ 
 
     def get_info_of_detail(self):
-        detail = ""
-        info = self.driver.find_elements_by_class_name("col-xs-6")
-        for tt in info:
-            detail += tt.text + "\n"
-        return detail
+        info = [tt.text for tt in self.driver.find_elements_by_class_name("col-xs-6")]
+        return info
 
     def search(self):
         start_time = time.time()
@@ -65,9 +64,13 @@ class SearchOnline:
                 break
             
         for url in links:
-            print(url)
+            result = []
             self.driver.get(url)
-            result += self.get_info_of_detail() + self.check_logo() + "\n\n"
+            result = self.get_info_of_detail()
+            result.append(self.check_logo()[0])
+            result.append(self.check_logo()[1])
+            print(result)
+
         self.driver.close()
         file.write(result)
         time_exec = time.time() - start_time
